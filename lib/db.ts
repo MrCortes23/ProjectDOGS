@@ -3,20 +3,21 @@ import { Pool } from "pg"
 const db = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // Necesario para conexiones SSL a Neon
-  },
+    rejectUnauthorized: false
+  }
 })
 
 // Función para probar la conexión
 export async function testConnection() {
   try {
-    const client = await db.connect()
-    console.log("Conexión a Neon establecida correctamente")
-    client.release()
-    return true
+    console.log('Intentando conectar a la base de datos...');
+    const client = await db.connect();
+    console.log('Conexión establecida correctamente');
+    client.release();
+    return true;
   } catch (error) {
-    console.error("Error al conectar a Neon:", error)
-    return false
+    console.error('Error al conectar a la base de datos:', error);
+    return false;
   }
 }
 

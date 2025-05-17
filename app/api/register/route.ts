@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     } catch (error: unknown) {
       await client.query('ROLLBACK');
       
-      if (error instanceof Error && error.code === '23505') {
+      if (error instanceof Error && 'code' in error && error.code === '23505') {
         return NextResponse.json(
           { error: 'Este correo ya está registrado' },
           { status: 400 }
