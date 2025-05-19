@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react'
-import { Perro } from './PerrosList'
+import { Perro } from './types'
 
 interface PerroEditProps {
   perro: Perro
@@ -38,7 +38,7 @@ export default function PerroEdit({ perro, onClose, onUpdate }: PerroEditProps) 
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div className="mt-3 text-center">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Editar Perro
+            Editar perro
           </h3>
           <form onSubmit={handleSubmit} className="mt-4">
             <div className="space-y-4">

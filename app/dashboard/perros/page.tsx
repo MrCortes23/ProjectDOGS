@@ -5,11 +5,18 @@ import PerroForm from '@/components/dashboard/perros/PerroForm'
 import PerroEdit from '@/components/dashboard/perros/PerroEdit'
 import usePerros from '@/components/dashboard/perros/usePerros'
 import { useState } from 'react'
-import { Perro } from '@/components/dashboard/perros/PerrosList'
+import { Perro } from '@/components/dashboard/perros/types'
 
 export default function Perros() {
-  const { perros, isLoading, error, registerPerro, updatePerro, deletePerro } = usePerros()
+  const { perros, isLoading, error, registerPerro, updatePerro, deletePerro, razas } = usePerros()
   const [editingPerro, setEditingPerro] = useState<Perro | null>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+
+  // Manejo de errores
+  const handleError = (err: unknown) => {
+    console.error('Error:', err)
+    setDeleteError(err instanceof Error ? err.message : 'Error desconocido')
+  }
 
   const handleEdit = (perro: Perro) => {
     setEditingPerro(perro)
@@ -20,37 +27,47 @@ export default function Perros() {
   }
 
   const handleUpdate = async (perro: Perro) => {
-    await updatePerro(perro)
-    handleCloseEdit()
+    try {
+      await updatePerro(perro)
+      handleCloseEdit()
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   const handleDelete = async (id: number) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este perro?')) {
-      await deletePerro(id)
+      try {
+        await deletePerro(id)
+      } catch (err) {
+        handleError(err)
+      }
     }
   }
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
       </div>
     )
   }
 
-  if (error) {
+  if (error || deleteError) {
     return (
-      <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <span className="block sm:inline">Error: {error}</span>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-red-500 p-4 rounded">
+          {error || deleteError}
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Mis Perros</h1>
+    <div className="p-8 space-y-8">
+      <h1 className="text-3xl font-bold text-gray-900">Mis Perros</h1>
       
-      <PerroForm onSubmit={registerPerro} />
+      <PerroForm onSubmit={registerPerro} razas={razas} />
       
       <PerrosList 
         perros={perros} 

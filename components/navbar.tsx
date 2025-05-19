@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import Logo from '@/components/logo';
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -10,13 +11,9 @@ const Navbar: React.FC = () => {
   return (
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-16 items-center">
           {/* Logo y título */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-indigo-600">DOGS</span>
-            </Link>
-          </div>
+          <Logo className="h-full" />
 
           {/* Menú de navegación */}
           <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
