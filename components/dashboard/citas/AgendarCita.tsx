@@ -116,12 +116,42 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
       )}
       
       <div className="bg-white rounded-xl text-black shadow-lg p-4">
-        <Calendar
-          onChange={(value) => handleDateSelect(value instanceof Date ? value : null)}
-          value={selectedDate}
-          locale={es}
-          className="bg-white"
-        />
+        <div className="text-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-800">Seleccione una fecha</h3>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4">
+          <Calendar
+            onChange={(value) => handleDateSelect(value instanceof Date ? value : null)}
+            value={selectedDate}
+            locale={es}
+            className="react-calendar"
+            tileClassName={(args: { date: Date }) => {
+              const { date } = args;
+              const isToday = date.toDateString() === new Date().toDateString();
+              const isSelected = date.toDateString() === (selectedDate?.toDateString() || '');
+              
+              return `
+                ${isToday ? 'bg-blue-50 text-blue-800 font-semibold' : ''}
+                ${isSelected ? 'bg-blue-500 text-white font-semibold' : ''}
+                hover:bg-gray-50
+                transition-colors
+                duration-200
+                w-full
+                h-full
+                flex
+                items-center
+                justify-center
+                rounded-lg
+              `;
+            }}
+            nextLabel={<span className="text-blue-500">›</span>}
+            prevLabel={<span className="text-blue-500">‹</span>}
+            next2Label={null}
+            prev2Label={null}
+
+            minDetail="month"
+          />
+        </div>
       </div>
 
       {selectedDate && (
@@ -141,7 +171,7 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
                   <option value="">Seleccione un perro</option>
                   {perros.map((perro) => (
                     <option key={perro.id_perro_pk} value={perro.id_perro_pk}>
-                      {perro.nombre} - {perro.tamano}
+                      {perro.nombre} 
                     </option>
                   ))}
                 </select>
@@ -163,7 +193,7 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
                   <option value="">Seleccione un servicio</option>
                   {serviciosUnicos.map((servicio) => (
                     <option key={servicio.id_servicio_pk} value={servicio.id_servicio_pk}>
-                      {servicio.tipo_de_servicio} - ${servicio.valor}
+                      {servicio.tipo_de_servicio} 
                     </option>
                   ))}
                 </select>

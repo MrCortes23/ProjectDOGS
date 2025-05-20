@@ -2,81 +2,130 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '@/components/logo';
+import { Button } from "./ui/button"
+import { X } from "lucide-react"
+import { Menu } from "lucide-react"
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const isActive = (path: string) => {
+    return pathname === path;
+  }
 
   return (
-    <nav className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Logo y título */}
-          <Logo className="h-full" />
+    <header className="bg-primary text-primary-foreground w-full shadow-md">
+      <div className="container mx-auto px-20 py-3">
+        <div className="flex items-center justify-between w-full">
+          <Logo className="flex items-center space-x-2" />
 
-          {/* Menú de navegación */}
-          <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex flex-1 justify-center space-x-6">
             <Link
               href="/"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === '/'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              }`}
+              className={`text-primary-foreground text-center hover:text-secondary transition-colors ${isActive("/") ? "text-secondary" : ""}`}
             >
               Inicio
             </Link>
             <Link
               href="/servicios"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === '/servicios'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              }`}
+              className={`text-primary-foreground text-center hover:text-secondary transition-colors ${isActive("/servicios") ? "text-secondary" : ""}`}
             >
               Servicios
             </Link>
             <Link
               href="/galeria"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === '/galeria'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              }`}
+              className={`text-primary-foreground text-center hover:text-secondary transition-colors ${isActive("/galeria") ? "text-secondary" : ""}`}
             >
               Galería
             </Link>
             <Link
               href="/contacto"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === '/contacto'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              }`}
+              className={`text-primary-foreground text-center hover:text-secondary transition-colors ${isActive("/contacto") ? "text-secondary" : ""}`}
             >
               Contacto
             </Link>
-          </div>
+          </nav>
 
-          {/* Botones de autenticación */}
-          <div className="flex items-center space-x-4">
-            <Link
-              href="/login"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          <div className="hidden items-center space-x-3 md:flex">
+            <Button
+              variant="default"
+              className="nav-button nav-button-secondary rounded-md border border-gray-300 hover:border-gray-400"
+              onClick={() => window.location.href = '/login'}
             >
-              Iniciar sesión
-            </Link>
-            <Link
-              href="/registro"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              Iniciar Sesión
+            </Button>
+            <Button
+              variant="default"
+              className="nav-button nav-button-secondary rounded-md border border-gray-300 hover:border-gray-400"
+              onClick={() => window.location.href = '/registro'}
             >
               Registrarse
-            </Link>
+            </Button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <Button variant="ghost" className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X className="menu-toggle-icon" /> : <Menu className="menu-toggle-icon" />}
+          </Button>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="mobile-menu">
+            <nav className="mobile-menu-nav">
+              <Link
+                href="/"
+                className={`mobile-menu-link ${isActive("/") ? "active" : ""}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Inicio
+              </Link>
+              <Link
+                href="/servicios"
+                className={`mobile-menu-link ${isActive("/servicios") ? "active" : ""}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Servicios
+              </Link>
+              <Link
+                href="/galeria"
+                className={`mobile-menu-link ${isActive("/galeria") ? "active" : ""}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Galería
+              </Link>
+              <Link
+                href="/contacto"
+                className={`mobile-menu-link ${isActive("/contacto") ? "active" : ""}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contacto
+              </Link>
+              <div className="mobile-menu-buttons">
+                <Button
+                  variant="outline"
+                  className="mobile-menu-button nav-button nav-button-outline"
+                  onClick={() => window.location.href = '/login'}
+                >
+                  Iniciar Sesión
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="mobile-menu-button nav-button nav-button-secondary"
+                  onClick={() => window.location.href = '/registro'}
+                >
+                  Registrarse
+                </Button>
+              </div>
+            </nav>
+          </div>
+        )}
       </div>
-    </nav>
+    </header>
   );
 };
 

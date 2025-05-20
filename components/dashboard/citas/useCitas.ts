@@ -45,8 +45,8 @@ export default function useCitas(): UseCitasReturn {
         throw new Error(data.error || 'Error al obtener las citas')
       }
     } catch (error) {
-      console.error('Error al cargar las citas:', error instanceof Error ? error.message : error)
-      setError('Error al cargar las citas. Por favor, inténtelo de nuevo.')
+      console.error('No hay sesion activa:', error instanceof Error ? error.message : error)
+      setError('No hay sesion activa')
     } finally {
       setIsLoading(false)
     }
@@ -84,7 +84,7 @@ export default function useCitas(): UseCitasReturn {
         throw new Error(data.error || 'Error al cargar los perros')
       }
       if (data.success) {
-        setPerros(data.perros.map(p => ({
+        setPerros(data.perros.map((p: { id_perro_pk: number; nombre: string; tamano: string }) => ({
           id_perro_pk: p.id_perro_pk,
           nombre: p.nombre,
           tamano: p.tamano

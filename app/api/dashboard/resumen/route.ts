@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     if (!userCookieMatch) {
       return NextResponse.json({
         success: false,
-        error: 'No se encontró el usuario en las cookies',
+        error: 'No hay sesión activa',
         details: 'Cookie de usuario no encontrada'
       }, { status: 401 })
     }

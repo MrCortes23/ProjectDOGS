@@ -42,7 +42,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-64px)]">
+    <div className="flex items-center justify-center min-h-[calc(90vh-64px)]">
       <div className="w-80 p-6 bg-white border border-gray-200 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4 text-gray-700 text-center">Iniciar Sesión</h2>
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
