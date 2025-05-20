@@ -54,69 +54,77 @@ export default function PerroForm({ onSubmit, razas }: PerroFormProps) {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Registrar Nuevo Perro</h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Nombre</label>
-          <input
-            type="text"
-            name="nombre"
-            required
-            className="mt-1 block w-full text-gray-700 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
+    <div className="bg-white p-8 rounded-xl shadow-md">
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">Registrar Nuevo Perro</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+            <input
+              type="text"
+              name="nombre"
+              required
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Nombre del perro"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Edad</label>
+            <input
+              type="number"
+              name="edad"
+              required
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Edad en años"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Sexo</label>
+            <select
+              name="sexo"
+              required
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">Selecciona el sexo</option>
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Raza</label>
+            <select
+              name="id_raza_fk"
+              required
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">Selecciona una raza</option>
+              {razas.map(raza => (
+                <option key={raza.id_raza_pk} value={raza.id_raza_pk.toString()}>
+                  {raza.tipo_de_raza} ({raza.tamano})
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Foto</label>
+            <div className="flex items-center gap-4">
+              <input
+                type="file"
+                name="foto"
+                accept="image/*"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Edad</label>
-          <input
-            type="number"
-            name="edad"
-            required
-            className="mt-1 block w-full text-gray-700 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Sexo</label>
-          <select
-            name="sexo"
-            required
-            className="mt-1 block w-full text-gray-700 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        <div className="flex justify-end gap-4">
+          <button
+            type="submit"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            <option value="">Selecciona el sexo</option>
-            <option value="Macho">Macho</option>
-            <option value="Hembra">Hembra</option>
-          </select>
+            Registrar Perro
+          </button>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Raza</label>
-          <select
-            name="id_raza_fk"
-            required
-            className="mt-1 block w-full text-gray-700 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          >
-            <option value="">Selecciona una raza</option>
-            {razas.map(raza => (
-              <option key={raza.id_raza_pk} value={raza.id_raza_pk.toString()}>
-                {raza.tipo_de_raza} ({raza.tamano})
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Foto</label>
-          <input
-            type="file"
-            name="foto"
-            accept="image/*"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Registrar Perro
-        </button>
       </form>
     </div>
   )

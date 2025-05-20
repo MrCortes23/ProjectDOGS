@@ -27,31 +27,52 @@ export default function ListaCitas({ citas }: ListaCitasProps) {
 
   return (
     <div className="mt-8">
-      <h3 className="text-xl font-semibold mb-4">Mis Citas</h3>
-      <div className="space-y-4">
+      <h3 className="text-2xl font-semibold mb-6">Mis Citas</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {citas.map((cita) => (
-          <div key={cita.id_cita_pk} className="bg-white p-4 rounded-lg shadow">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="font-semibold">{cita.nombre_perro}</p>
-                <p className="text-sm text-gray-500">{cita.fecha} - {cita.horario_disponible}</p>
-                <p className="text-sm text-gray-500">Empleado: {cita.nombre_empleado}</p>
-                <p className="text-sm text-gray-500">Costo: {new Intl.NumberFormat('es-CO', {
-                  style: 'currency',
-                  currency: 'COP'
-                }).format(cita.costo_total)}</p>
-                {cita.observaciones && (
-                  <p className="mt-2 text-sm">Observaciones: {cita.observaciones}</p>
-                )}
+          <div key={cita.id_cita_pk} className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h4 className="text-xl font-semibold text-gray-800">{cita.nombre_perro}</h4>
+                </div>
+                <div className="flex items-center">
+                  <span className={`px-4 py-2 rounded-full text-xs ${
+                    cita.pagada 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {cita.pagada ? 'Pagada' : 'Pendiente'}
+                  </span>
+                </div>
               </div>
-              <div className="ml-4">
-                <span className={`px-2 py-1 rounded-full text-xs ${
-                  cita.pagada 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {cita.pagada ? 'Pagada' : 'Pendiente'}
-                </span>
+
+              <div className="space-y-4">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Fecha:</span>
+                  <span className="font-medium text-gray-800">{cita.fecha}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Horario:</span>
+                  <span className="font-medium text-gray-800">{cita.horario_disponible}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Empleado:</span>
+                  <span className="font-medium text-gray-800">{cita.nombre_empleado}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Costo:</span>
+                  <span className="font-medium text-gray-800">{new Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP'
+                  }).format(cita.costo_total)}</span>
+                </div>
+                {cita.observaciones && (
+                  <div className="mt-2">
+                    <span className="text-sm text-gray-500">Observaciones:</span>
+                    <p className="mt-1 text-sm text-gray-700">{cita.observaciones}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

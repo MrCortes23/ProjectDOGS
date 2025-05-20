@@ -2,37 +2,18 @@
 
 import PerrosList from '@/components/dashboard/perros/PerrosList'
 import PerroForm from '@/components/dashboard/perros/PerroForm'
-import PerroEdit from '@/components/dashboard/perros/PerroEdit'
+
 import usePerros from '@/components/dashboard/perros/usePerros'
 import { useState } from 'react'
-import { Perro } from '@/components/dashboard/perros/types'
 
 export default function Perros() {
   const { perros, isLoading, error, registerPerro, updatePerro, deletePerro, razas } = usePerros()
-  const [editingPerro, setEditingPerro] = useState<Perro | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
   // Manejo de errores
   const handleError = (err: unknown) => {
     console.error('Error:', err)
     setDeleteError(err instanceof Error ? err.message : 'Error desconocido')
-  }
-
-  const handleEdit = (perro: Perro) => {
-    setEditingPerro(perro)
-  }
-
-  const handleCloseEdit = () => {
-    setEditingPerro(null)
-  }
-
-  const handleUpdate = async (perro: Perro) => {
-    try {
-      await updatePerro(perro)
-      handleCloseEdit()
-    } catch (err) {
-      handleError(err)
-    }
   }
 
   const handleDelete = async (id: number) => {
@@ -42,6 +23,14 @@ export default function Perros() {
       } catch (err) {
         handleError(err)
       }
+    }
+  }
+
+  const handleUpdate = async (formData: FormData) => {
+    try {
+      await updatePerro(formData)
+    } catch (err) {
+      handleError(err)
     }
   }
 
@@ -71,17 +60,10 @@ export default function Perros() {
       
       <PerrosList 
         perros={perros} 
-        onEdit={handleEdit} 
         onDelete={handleDelete} 
+        onSave={handleUpdate} 
+        razas={razas}
       />
-
-      {editingPerro && (
-        <PerroEdit 
-          perro={editingPerro} 
-          onClose={handleCloseEdit} 
-          onUpdate={handleUpdate} 
-        />
-      )}
     </div>
   )
 }

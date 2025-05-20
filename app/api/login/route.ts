@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 
     // Verificar si el correo existe en cliente
     const cliente = await client.query(
-      'SELECT * FROM cliente WHERE id_cliente_pk = $1',
+      'SELECT id_cliente_pk, nombre, correo, telefono, direccion FROM cliente WHERE id_cliente_pk = $1',
       [sesion.rows[0].id_cliente_fk]
     );
 
@@ -58,6 +58,8 @@ export async function POST(request: Request) {
         id: cliente.rows[0].id_cliente_pk,
         nombre: cliente.rows[0].nombre,
         correo: cliente.rows[0].correo,
+        telefono: cliente.rows[0].telefono || '',
+        direccion: cliente.rows[0].direccion || '',
         rol: sesion.rows[0].rol
       },
       token: token
@@ -68,6 +70,8 @@ export async function POST(request: Request) {
       id: cliente.rows[0].id_cliente_pk,
       nombre: cliente.rows[0].nombre,
       correo: cliente.rows[0].correo,
+      telefono: cliente.rows[0].telefono || '',
+      direccion: cliente.rows[0].direccion || '',
       rol: sesion.rows[0].rol
     }));
     response.cookies.set('token', token);

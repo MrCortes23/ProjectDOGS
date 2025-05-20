@@ -110,16 +110,17 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
   return (
     <div className="mb-6">
       {loading && (
-        <div className="mb-4 p-4 rounded-lg bg-blue-50 text-blue-700">
-          Creando cita...
+        <div className="mb-4 p-4 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500 mr-2"></div>
+          <span>Creando cita...</span>
         </div>
       )}
       
-      <div className="bg-white rounded-xl text-black shadow-lg p-4">
-        <div className="text-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Seleccione una fecha</h3>
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-semibold text-gray-800">Seleccione una fecha</h3>
         </div>
-        <div className="bg-white rounded-lg shadow-sm p-4">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <Calendar
             onChange={(value) => handleDateSelect(value instanceof Date ? value : null)}
             value={selectedDate}
@@ -148,24 +149,23 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
             prevLabel={<span className="text-blue-500">‹</span>}
             next2Label={null}
             prev2Label={null}
-
             minDetail="month"
           />
         </div>
       </div>
 
       {selectedDate && (
-        <div className="bg-white rounded-xl text-black shadow-lg p-6 mt-4">
+        <div className="bg-white rounded-xl shadow-md p-6 mt-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 gap-4">
-              <div className="mt-4">
+            <div className="grid grid-cols-1 gap-6">
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Perro
                 </label>
                 <select
                   value={selectedPerroId || ''}
                   onChange={(e) => handlePerroSelect(e.target.value ? parseInt(e.target.value) : null)}
-                  className="w-full p-2 border rounded-md"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 >
                   <option value="">Seleccione un perro</option>
@@ -176,18 +176,18 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
                   ))}
                 </select>
                 {!selectedPerroId && (
-                  <p className="text-sm text-red-500 mt-1">Por favor, seleccione un perro primero</p>
+                  <p className="text-sm text-red-500 mt-2">Por favor, seleccione un perro primero</p>
                 )}
               </div>
 
-              <div className="mt-4">
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Servicio
                 </label>
                 <select
                   value={selectedServiceId || ''}
                   onChange={(e) => handleServiceSelect(e.target.value ? parseInt(e.target.value) : null)}
-                  className="w-full p-2 border rounded-md"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   disabled={!selectedPerroId}
                 >
                   <option value="">Seleccione un servicio</option>
@@ -198,58 +198,66 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
                   ))}
                 </select>
               </div>
-
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Costo Total
-                </label>
-                <div className="p-2 border rounded-md bg-gray-50">
-                  {new Intl.NumberFormat('es-CO', {
-                    style: 'currency',
-                    currency: 'COP'
-                  }).format(costo)}
-                </div>
-              </div>
-
-              <div className="mt-4">
+              <div className="mt-1">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Horario
                 </label>
                 <select
                   value={selectedTime}
                   onChange={(e) => setSelectedTime(e.target.value)}
-                  className="w-full p-2 border rounded-md"
-                  disabled={!selectedPerroId || !selectedServiceId}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
                 >
                   <option value="">Seleccione un horario</option>
                   <option value="09:00">09:00 AM</option>
                   <option value="10:00">10:00 AM</option>
                   <option value="11:00">11:00 AM</option>
+                  <option value="12:00">12:00 PM</option>
                   <option value="14:00">02:00 PM</option>
                   <option value="15:00">03:00 PM</option>
                   <option value="16:00">04:00 PM</option>
+                  <option value="17:00">05:00 PM</option>
                 </select>
               </div>
 
-              <div className="mt-4">
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Observaciones
                 </label>
                 <textarea
                   value={observaciones}
                   onChange={(e) => setObservaciones(e.target.value)}
-                  className="w-full p-2 border rounded-md"
-                  rows={3}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  rows={4}
+                  placeholder="Ej: Baño completo con secado"
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={loading || !selectedPerroId || !selectedServiceId || !selectedTime}
-                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Creando cita...' : 'Agendar Cita'}
-              </button>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Costo
+                </label>
+                <div className="flex items-center">
+                  <span className="text-2xl font-bold text-gray-800">${costo.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      <span>Creando cita...</span>
+                    </div>
+                  ) : (
+                    'Agendar cita'
+                  )}
+                </button>
+              </div>
             </div>
           </form>
         </div>

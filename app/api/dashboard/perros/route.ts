@@ -236,6 +236,7 @@ export async function PUT(request: Request) {
     const sexo = formData.get('sexo') as string
     const id_raza_fk = formData.get('id_raza_fk') as string | null
     const foto = formData.get('foto') as File | null
+    const foto_actual = formData.get('foto_actual') as string | null
 
     if (!nombre || !edad || !sexo) {
       return NextResponse.json({
@@ -247,6 +248,8 @@ export async function PUT(request: Request) {
     let foto_data = null
     if (foto) {
       foto_data = Buffer.from(await foto.arrayBuffer())
+    } else if (foto_actual !== 'true') {
+      foto_data = null
     }
 
     // Primero actualizamos el perro
@@ -257,12 +260,15 @@ export async function PUT(request: Request) {
           nombre = $1,
           edad = $2,
           sexo = $3,
-          foto_data = $4,
+          foto_data = CASE 
+            WHEN $4::bytea IS NOT NULL THEN $4::bytea
+            ELSE foto_data
+          END,
           id_cliente_fk = $5
         WHERE id_perro_pk = $6
         RETURNING id_perro_pk
       `,
-      [nombre, edad, sexo, foto_data, userData.id, id_perro_pk]
+      [nombre, edad, sexo, foto_data || null, userData.id, id_perro_pk]
     )
 
     const idPerro = perroResult.rows[0].id_perro_pk
@@ -334,7 +340,27 @@ export async function DELETE(request: Request) {
       }, { status: 400 })
     }
 
-    // Primero eliminamos la relación
+    // Primero eliminamos las facturas relacionadas
+    await pool.query(
+      `
+        DELETE FROM factura 
+        WHERE id_cita_fk IN (
+          SELECT id_cita_pk FROM cita WHERE id_perro_fk = $1
+        )
+      `,
+      [id]
+    )
+
+    // Luego eliminamos las citas relacionadas
+    await pool.query(
+      `
+        DELETE FROM cita 
+        WHERE id_perro_fk = $1
+      `,
+      [id]
+    )
+
+    // Luego eliminamos la relación
     await pool.query(
       `
         DELETE FROM perro_raza 
@@ -343,7 +369,7 @@ export async function DELETE(request: Request) {
       [id]
     )
 
-    // Luego eliminamos el perro
+    // Finalmente eliminamos el perro
     const result = await pool.query(
       `
         DELETE FROM perro 

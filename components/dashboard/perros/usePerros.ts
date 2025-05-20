@@ -9,7 +9,7 @@ interface UsePerrosReturn {
   isLoading: boolean
   error: string | null
   registerPerro: (formData: FormData) => Promise<void>
-  updatePerro: (perro: Perro) => Promise<void>
+  updatePerro: (formData: FormData) => Promise<void>
   deletePerro: (id: number) => Promise<void>
 }
 
@@ -82,22 +82,8 @@ export default function usePerros(): UsePerrosReturn {
     }
   }
 
-  const updatePerro = async (perro: Perro) => {
+  const updatePerro = async (formData: FormData) => {
     try {
-      const formData = new FormData()
-      
-      // Agregar los campos del perro al FormData
-      formData.append('id_perro_pk', perro.id_perro_pk.toString())
-      formData.append('nombre', perro.nombre)
-      formData.append('edad', perro.edad)
-      formData.append('sexo', perro.sexo)
-      formData.append('id_cliente_fk', perro.id_cliente_fk.toString())
-      
-      // Si hay foto_data, agregarla al FormData
-      if (perro.foto_data) {
-        formData.append('foto', new Blob([perro.foto_data], { type: 'image/jpeg' }))
-      }
-
       const response = await fetch('/api/dashboard/perros', {
         method: 'PUT',
         body: formData
@@ -113,8 +99,33 @@ export default function usePerros(): UsePerrosReturn {
         foto_data: result.perro.foto_data ? Buffer.from(result.perro.foto_data) : null
       }
 
+      // Encontrar el ID del perro en el formData
+      const idPerro = formData.get('id_perro_pk')
+      if (!idPerro) {
+        throw new Error('ID del perro no encontrado en los datos de formulario')
+      }
+
+      const perroActualizado = perros.find(p => p.id_perro_pk.toString() === idPerro.toString())
+      if (perroActualizado) {
+        const formData = new FormData()
+        formData.append('id_perro_pk', perroActualizado.id_perro_pk.toString())
+        formData.append('nombre', perroActualizado.nombre)
+        formData.append('edad', perroActualizado.edad.toString())
+        formData.append('sexo', perroActualizado.sexo)
+        if (perroActualizado.id_raza_fk) {
+          formData.append('id_raza_fk', perroActualizado.id_raza_fk.toString())
+        }
+        // Si hay foto_data, agregarla al FormData
+        if (perroActualizado.foto_data) {
+          formData.append('foto', new Blob([perroActualizado.foto_data], { type: 'image/jpeg' }))
+        } else {
+          // Si no hay foto_data pero existe foto_actual, mantener la foto actual
+          formData.append('foto_actual', 'true')
+        }
+      }
+
       setPerros(prev => 
-        prev.map(p => p.id_perro_pk === perro.id_perro_pk ? updatedPerro : p)
+        prev.map(p => p.id_perro_pk.toString() === idPerro.toString() ? updatedPerro : p)
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al actualizar el perro')
