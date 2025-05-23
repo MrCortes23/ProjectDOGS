@@ -9,6 +9,11 @@ import Logo from '@/components/logo';
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
   
+  // No mostrar el sidebar en la ruta de administración
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+  
   const isActive = (path: string) => {
     return pathname === path;
   };

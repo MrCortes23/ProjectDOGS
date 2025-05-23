@@ -52,29 +52,35 @@ export async function POST(request: Request) {
     const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
 
     // Establecer cookies
-    const response = NextResponse.json({
-      success: true,
-      user: {
-        id: cliente.rows[0].id_cliente_pk,
-        nombre: cliente.rows[0].nombre,
-        correo: cliente.rows[0].correo,
-        telefono: cliente.rows[0].telefono || '',
-        direccion: cliente.rows[0].direccion || '',
-        rol: sesion.rows[0].rol
-      },
-      token: token
-    });
-
-    // Establecer cookies
-    response.cookies.set('user', JSON.stringify({
+    const userData = {
       id: cliente.rows[0].id_cliente_pk,
       nombre: cliente.rows[0].nombre,
       correo: cliente.rows[0].correo,
       telefono: cliente.rows[0].telefono || '',
       direccion: cliente.rows[0].direccion || '',
       rol: sesion.rows[0].rol
-    }));
-    response.cookies.set('token', token);
+    };
+
+    const response = NextResponse.json({
+      success: true,
+      user: userData
+    });
+
+    // Establecer cookies
+    response.cookies.set('user', JSON.stringify(userData), {
+      httpOnly: false, // Necesitamos que sea accesible desde JavaScript
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/', // Aseguramos que la cookie esté disponible en toda la aplicación
+      maxAge: 60 * 60 * 24 * 7 // 7 días
+    });
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/', // Aseguramos que la cookie esté disponible en toda la aplicación
+      maxAge: 60 * 60 * 24 * 7 // 7 días
+    });
 
     return response;
 

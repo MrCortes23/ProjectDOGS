@@ -1,11 +1,41 @@
 'use client';
 
 export default function LogoutButton() {
-  const handleLogout = () => {
-    // Clear cookies
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    window.location.href = '/';
+
+  const handleLogout = async () => {
+    try {
+      // Opcional: Hacer una llamada al servidor para invalidar la sesión
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      
+      // Limpiar todas las cookies relacionadas con la autenticación
+      const cookies = document.cookie.split(';');
+      
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+        // Eliminar la cookie configurando su fecha de expiración en el pasado
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+
+      // Limpiar el almacenamiento local y de sesión
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Forzar una recarga completa para limpiar el estado de la aplicación
+      window.location.href = '/';
+      
+      // Opcional: Redirigir usando el router de Next.js
+      // router.push('/');
+      // router.refresh(); // Forzar recarga del cliente
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      // Asegurarse de redirigir incluso si hay un error
+      window.location.href = '/';
+    }
   };
 
   return (

@@ -96,7 +96,7 @@ export default function Resumen() {
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Mis Perros</h2>
         <div className="space-y-4">
           {perros.map((perro) => (
-            <div key={perro.id_perro_pk} className="p-4 bg-gray-100 rounded-lg">
+            <div key={perro.id_perro_pk} className="p-4 rounded-lg">
               <h3 className="font-semibold text-gray-900">{perro.nombre}</h3>
               <p className="text-gray-600">Edad: {perro.edad}</p>
               <p className="text-gray-600">Sexo: {perro.sexo}</p>
@@ -111,7 +111,7 @@ export default function Resumen() {
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Mis Citas</h2>
         <div className="space-y-4">
           {citas.map((cita) => (
-            <div key={cita.id_cita_pk} className="p-4 bg-gray-100 rounded-lg">
+            <div key={cita.id_cita_pk} className="p-4 rounded-lg">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="font-semibold text-gray-900">{cita.fecha} - {cita.horario_disponible}</h3>
                 <span className="text-sm text-gray-600">${cita.costo_total}</span>

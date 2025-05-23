@@ -24,7 +24,7 @@ interface CitasProps {
 
 export default function Citas({ citas, onSchedule, servicios, perros }: CitasProps) {
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-white  min-h-screen">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Calendario de Citas</h2>
         

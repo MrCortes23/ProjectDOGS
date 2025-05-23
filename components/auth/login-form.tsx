@@ -33,8 +33,11 @@ export default function LoginForm() {
         return;
       }
 
-      // Redirigir al dashboard
-      router.push('/dashboard');
+      // Establecer la cookie de usuario en el cliente
+      document.cookie = `user=${encodeURIComponent(JSON.stringify(data.user))}; path=/; max-age=${60 * 60 * 24 * 7}; secure=false; samesite=strict`;
+
+      // Redirigir según el rol
+      router.push(data.user.rol === 'administrador' ? '/admin' : '/dashboard');
     } catch (err) {
       setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
       console.error('Error:', err);
