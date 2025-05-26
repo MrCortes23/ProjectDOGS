@@ -49,7 +49,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-64px)]">
+    <div className="flex items-center justify-center min-h-[calc(100vh-64px)] pt-8">
       <div className="w-[350px] p-6 bg-white border border-gray-200 rounded-xl shadow-lg">
           <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Registrarse</h2>
           {error && <div className="text-red-500 mb-4 text-center">{error}</div>}

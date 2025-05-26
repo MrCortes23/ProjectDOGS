@@ -1,11 +1,16 @@
 "use client"
-
-import Navbar from "@/components/navbar"
+import SimpleHeroCarousel from "../components/carrousel"
+import MainServices from "../components/tarjetaservicio"
+import Testimonial from "../components/testimonios"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white transition-colors duration-300 overflow-hidden">
-      <Navbar />  
+    <div>
+      <SimpleHeroCarousel />
+
+      <MainServices />
+
+      <Testimonial />
     </div>
   )
-}
+} 
