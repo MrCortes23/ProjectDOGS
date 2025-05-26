@@ -17,7 +17,7 @@ const mainServices = [
     icon: Heart,
     features: ["Supervisión 24/7", "Alimentación incluida", "Reportes diarios"],
     price: "Amigos",
-    ctaText: "Visualizar lista",
+    ctaText: "Visualizar Galeria",
   },
   {
     id: 2,
@@ -129,8 +129,8 @@ export default function MainServices() {
             return (
               <motion.div
                 key={service.id}
-                className={`group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 ${
-                  isHovered ? "scale-105" : ""
+                className={`group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
+                  isHovered ? "scale-[1.03]" : ""
                 }`}
                 onMouseEnter={() => setHoveredCard(service.id)}
                 onMouseLeave={() => setHoveredCard(null)}
@@ -144,7 +144,7 @@ export default function MainServices() {
                   {/* Imagen circular */}
                   <div className="relative mb-6 flex justify-center">
                     <div className="relative">
-                      <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-gray-100 shadow-lg group-hover:border-gray-300 transition-all duration-500">
+                      <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-gray-100 shadow-xl group-hover:border-gray-300 transition-all duration-500">
                         <Image
                           src={service.image || "/placeholder.svg"}
                           alt={service.title}

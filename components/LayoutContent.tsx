@@ -17,7 +17,7 @@ export default function LayoutContent({ children }: { children: React.ReactNode 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow bg-white">
         {children}
       </main>
       <Footer />

@@ -1,11 +1,7 @@
 "use client"
 
+import ServicesSection from '@/components/servidetallados'
 
-export default function ServicesPage() {
-  return (
-    <div className="min-h-screen bg-gray-50 transition-colors duration-300">
-
-
-    </div>
-  )
+export default function ServiciosPage() {
+  return <ServicesSection />
 }

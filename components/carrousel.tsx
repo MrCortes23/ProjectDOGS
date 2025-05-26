@@ -20,7 +20,7 @@ const defaultSlides: SlideData[] = [
   {
     id: 1,
     image: "/images/navidad.jpg",
-    welcomeText: "Bienvenidos a",
+    welcomeText: "Bienvenidos a la",
     businessName: "Guardería Canina DOGS",
     mainHeadline: "El hogar perfecto para tu mejor amigo",
     description: "Cuidado profesional con amor y dedicación para que tu mascota se sienta como en casa.",
@@ -39,7 +39,7 @@ const defaultSlides: SlideData[] = [
   },
   {
     id: 3,
-    image: "/images/selfie.jpg",
+    image: "/images/bigotes.jpg",
     welcomeText: "Únete a la",
     businessName: "Diversión Canina",
     mainHeadline: "Donde cada perro es especial",
@@ -98,10 +98,10 @@ export default function SimpleHeroCarousel({ slides }: SimpleHeroCarouselProps) 
   const currentSlideData = welcomeSlides[currentSlide]
 
   return (
-    <div className="relative w-full my-12 flex items-center justify-center">
+    <div className="relative w-full my-12 flex items-center justify-center overflow-x-hidden">
       <div 
         id="carousel-container"
-        className="relative rounded-2xl overflow-hidden h-[75vh] min-h-[550px] max-h-[800px] shadow-2xl w-[90%] max-w-[1400px] mx-auto bg-gray-100 group"
+        className="relative rounded-3xl overflow-hidden h-[75vh] min-h-[550px] max-h-[800px] shadow-2xl hover:shadow-3xl transition-all duration-500 w-full max-w-[1400px] mx-4 sm:mx-6 lg:mx-8 bg-gray-100 group"
       >
       {/* Contenedor de la imagen con animación */}
       <AnimatePresence mode="wait">

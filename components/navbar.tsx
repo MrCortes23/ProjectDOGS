@@ -36,7 +36,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="bg-primary text-primary-foreground w-full shadow-md">
+    <header className="bg-primary text-primary-foreground w-full shadow-md relative z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="relative flex items-center justify-between w-full">
           {/* Logo */}
@@ -48,30 +48,27 @@ const Navbar = () => {
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
             <nav className="flex items-center">
               <div className="flex items-center space-x-6 lg:space-x-8">
-                <Link
-                  href="/"
-                  className={`text-black font-bold text-center hover:text-primary transition-colors ${isActive("/") ? "text-black" : ""}`}
-                >
-                  Inicio
-                </Link>
-                <Link
-                  href="/servicios"
-                  className={`text-black font-bold text-center hover:text-primary transition-colors ${isActive("/servicios") ? "text-black" : ""}`}
-                >
-                  Servicios
-                </Link>
-                <Link
-                  href="/galeria"
-                  className={`text-black font-bold text-center hover:text-primary transition-colors ${isActive("/galeria") ? "text-black" : ""}`}
-                >
-                  Galería
-                </Link>
-                <Link
-                  href="/contacto"
-                  className={`text-black font-bold text-center hover:text-primary transition-colors ${isActive("/contacto") ? "text-black" : ""}`}
-                >
-                  Contacto
-                </Link>
+                {[
+                  { href: "/", label: "Inicio" },
+                  { href: "/servicios", label: "Servicios" },
+                  { href: "/galeria", label: "Galería" },
+                  { href: "/contacto", label: "Contacto" }
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`relative px-1 py-2 font-bold text-center transition-colors group ${
+                      isActive(item.href) ? 'text-green-800' : 'text-black hover:text-green-800'
+                    }`}
+                  >
+                    {item.label}
+                    <span 
+                      className={`absolute bottom-0 left-0 w-full h-0.5 bg-green-800 transition-all duration-300 transform scale-x-0 ${
+                        isActive(item.href) ? 'scale-x-100' : 'group-hover:scale-x-100'
+                      }`}
+                    />
+                  </Link>
+                ))}
               </div>
             </nav>
           </div>

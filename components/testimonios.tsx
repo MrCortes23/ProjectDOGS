@@ -120,7 +120,7 @@ export default function Testimonials() {
 
   return (
     <motion.section 
-      className="pt-2 pb-16 lg:pt-6 lg:pb-24 bg-gradient-to-b from-white via-green-50 to-white w-full flex justify-center relative overflow-hidden"
+      className="pt-12 pb-16 lg:pt-20 lg:pb-24 w-full flex justify-center relative overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px 0px -50px 0px" }}
