@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -129,10 +130,10 @@ const ServicesSection = () => {
   }, []);
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Nuestros Servicios</h2>
+    <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white w-full">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="text-center mb-16 w-full">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-black to-green-500">Nuestros Servicios</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Ofrecemos una amplia gama de servicios profesionales para el cuidado y bienestar de tu mascota en la Guarderia Canina DOGS
           </p>
