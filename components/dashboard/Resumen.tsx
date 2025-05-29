@@ -84,9 +84,9 @@ export default function Resumen() {
             <h3 className="text-xl font-semibold text-blue-900">Perros Registrados</h3>
             <p className="text-3xl font-bold text-blue-600">{perros.length}</p>
           </div>
-          <div className="p-4 bg-purple-50 rounded-lg">
-            <h3 className="text-xl font-semibold text-purple-900">Citas</h3>
-            <p className="text-3xl font-bold text-purple-600">{citas.length}</p>
+          <div className="p-4 bg-green-100 rounded-lg">
+            <h3 className="text-xl font-semibold text-green-900">Citas</h3>
+            <p className="text-3xl font-bold text-green-800">{citas.length}</p>
           </div>
         </div>
       </div>

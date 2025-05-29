@@ -57,7 +57,7 @@ const Navbar = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative px-1 py-2 font-bold text-center transition-colors group ${
+                    className={`relative px-1 py-2 text-center transition-colors group ${
                       isActive(item.href) ? 'text-green-800' : 'text-black hover:text-green-800'
                     }`}
                   >
@@ -98,7 +98,7 @@ const Navbar = () => {
           {/* Mobile Menu Button - Solo en cliente */}
           <div className="md:hidden ml-4">
             <Button variant="outline" className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="menu-toggle-icon" /> : <Menu className="menu-toggle-icon" />}
+              {isMenuOpen ? <X className="menu-toggle-icon text-gray-400" /> : <Menu className="menu-toggle-icon text-gray-400" />}
             </Button>
           </div>
         </div>
@@ -109,28 +109,28 @@ const Navbar = () => {
             <nav className="flex flex-col p-4 space-y-4">
               <Link
                 href="/"
-                className={`px-4 py-2 rounded-md text-black hover:bg-gray-100 ${isActive("/") ? "font-medium text-primary" : ""}`}
+                className={`px-4 py-2 rounded-md text-black hover:bg-green-800 ${isActive("/") ? "font-medium text-green-800" : ""}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Inicio
               </Link>
               <Link
                 href="/servicios"
-                className={`px-4 py-2 rounded-md text-black hover:bg-gray-100 ${isActive("/servicios") ? "font-medium text-primary" : ""}`}
+                className={`px-4 py-2 rounded-md text-black hover:bg-green-800 ${isActive("/servicios") ? "font-medium text-green-800" : ""}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Servicios
               </Link>
               <Link
                 href="/galeria"
-                className={`px-4 py-2 rounded-md text-black hover:bg-gray-100 ${isActive("/galeria") ? "font-medium text-primary" : ""}`}
+                className={`px-4 py-2 rounded-md text-black hover:bg-green-800 ${isActive("/galeria") ? "font-medium text-green-800" : ""}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Galería
               </Link>
               <Link
                 href="/contacto"
-                className={`px-4 py-2 rounded-md text-black hover:bg-gray-100 ${isActive("/contacto") ? "font-medium text-primary" : ""}`}
+                className={`px-4 py-2 rounded-md text-black hover:bg-green-800 ${isActive("/contacto") ? "font-medium text-green-800" : ""}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contacto

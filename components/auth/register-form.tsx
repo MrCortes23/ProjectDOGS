@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function RegisterForm() {
   const [name, setName] = useState('');
@@ -50,8 +51,19 @@ export default function RegisterForm() {
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-64px)] pt-8">
-      <div className="w-[350px] p-6 bg-white border border-gray-200 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Registrarse</h2>
+      <div className="w-[350px] bg-white border border-gray-200 rounded-xl shadow-lg">
+          <div className="flex justify-center pt-6 pb-2">
+            <Image 
+              src="/images/logonegro.png" 
+              alt="Logo Guardería Campestre DOGS" 
+              width={150}
+              height={64}
+              className="h-16 w-auto"
+              priority
+            />
+          </div>
+          <div className="px-6 pb-6">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">Registrarse</h2>
           {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
@@ -63,7 +75,7 @@ export default function RegisterForm() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -76,7 +88,7 @@ export default function RegisterForm() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -89,7 +101,7 @@ export default function RegisterForm() {
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -102,7 +114,7 @@ export default function RegisterForm() {
                 id="address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -115,7 +127,7 @@ export default function RegisterForm() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -128,17 +140,18 @@ export default function RegisterForm() {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full p-2 rounded border border-gray-300 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200"
+              className="w-full bg-green-800 text-white py-3 px-6 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200"
             >
               Registrarse
             </button>
           </form>
+        </div>
       </div>
     </div>
   );

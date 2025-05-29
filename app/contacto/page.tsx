@@ -1,10 +1,13 @@
 "use client"
 
+import ContactSection from "@/components/apartcontacto"
 
 export default function contacpage() {
   return (
-    <div className="min-h-screen bg-gray-50 transition-colors duration-300">
+    <main>
 
-    </div>
-  )
+    <ContactSection />
+
+  </main>
+)
 }

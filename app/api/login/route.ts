@@ -40,8 +40,20 @@ export async function POST(request: Request) {
       );
     }
 
-    // Verificar la contraseña
-    if (sesion.rows[0].contrasena !== contrasena) {
+    console.log('Contraseña ingresada:', contrasena);
+    console.log('Hash almacenado:', sesion.rows[0].contrasena);
+
+    // Verificar la contraseña usando una consulta directa
+    const validPassword = await client.query(
+      `SELECT contrasena = crypt($1, contrasena) AS is_valid 
+       FROM inicio_de_sesion 
+       WHERE id_sesion_pk = $2`,
+      [contrasena, sesion.rows[0].id_sesion_pk]
+    );
+    
+    console.log('Resultado de validación:', validPassword.rows[0]);
+
+    if (!validPassword.rows[0]?.is_valid) {
       return NextResponse.json(
         { error: 'Correo o contraseña incorrectos' },
         { status: 401 }

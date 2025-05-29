@@ -36,7 +36,7 @@ const defaultSlides: SlideData[] = [
     mainHeadline: "Cuidado profesional para tu mascota",
     description: "Personal capacitado y instalaciones diseñadas especialmente para el bienestar de tu perro.",
     primaryCTA: "Ver Servicios",
-    secondaryCTA: "Llamar Ahora",
+    secondaryCTA: "Contactanos!",
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const defaultSlides: SlideData[] = [
     mainHeadline: "Donde cada perro es especial",
     description: "Un ambiente seguro y divertido donde tu mascota hará nuevos amigos y vivirá experiencias únicas.",
     primaryCTA: "Agendar Visita",
-    secondaryCTA: "WhatsApp",
+    secondaryCTA: "Registrate!",
   },
 ]
 
@@ -250,15 +250,15 @@ export default function SimpleHeroCarousel({ slides }: SimpleHeroCarouselProps) 
         <div className="flex flex-col gap-2 text-xs lg:text-sm">
           <div className="flex items-center gap-2">
             <Phone className="w-3 h-3 lg:w-4 lg:h-4 text-black" />
-            <span>(555) 123-4567</span>
-          </div>
+              <span>(301) 8268642</span>
+            </div>
           <div className="flex items-center gap-2">
             <MapPin className="w-3 h-3 lg:w-4 lg:h-4 text-black" />
-            <span>Av. Principal 123</span>
+            <span>Calle 27 #5-142</span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="w-3 h-3 lg:w-4 lg:h-4 text-black" />
-            <span>7AM - 8PM</span>
+            <span>7AM - 6PM</span>
           </div>
         </div>
       </div>
