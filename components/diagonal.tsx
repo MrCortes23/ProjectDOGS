@@ -6,7 +6,7 @@ import { Heart, Shield, Clock, Users } from "lucide-react"
 
 // 🔧 AQUÍ PUEDES MODIFICAR EL CONTENIDO
 const sectionData = {
-  image: "/images/cumpleaños.jpg",
+  image: "/images/cumpleanos.jpg",
   badge: "¿Por qué elegirnos?",
   title: "Más que una guardería, somos familia",
   subtitle: "Tu tranquilidad es nuestra prioridad",

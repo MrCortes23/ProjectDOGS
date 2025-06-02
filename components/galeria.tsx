@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, useInView, useAnimation } from "framer-motion"
 import { PawPrint } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 interface GalleryImage {
   id: number
@@ -191,34 +192,34 @@ const gallerySections: GallerySection[] = [
     images: [
       {
         id: 1,
-        src: "/images/cumpleaños5.jpg",
+        src: "/images/cumpleanos5.jpg",
         alt: "Fiesta de cumpleaños",
         className: "col-span-2 row-span-2",
       },
-      { id: 2, src: "/images/cumpleaños2.jpg", 
+      { id: 2, src: "/images/cumpleanos2.jpg", 
         alt: "Pastel canino", 
         className: "col-span-1 row-span-1" },
       {
         id: 3,
-        src: "/images/cumpleaños3.jpg",
+        src: "/images/cumpleanos3.jpg",
         alt: "Cumpleaños",
         className: "col-span-1 row-span-1",
       },
       {
         id: 4,
-        src: "/images/cumpleaños4.jpg",
+        src: "/images/cumpleanos4.jpg",
         alt: "Regalos especiales",
         className: "col-span-1 row-span-1",
       },
       {
         id: 5,
-        src: "/images/cumpleaños8.jpg",
+        src: "/images/cumpleanos8.jpg",
         alt: "Decoración festiva",
         className: "col-span-1 row-span-1",
       },
       {
         id: 6,
-        src: "/images/cumpleaños7.jpg",
+        src: "/images/cumpleanos7.jpg",
         alt: "Invitados especiales",
         className: "col-span-1 row-span-1",
       },
@@ -259,7 +260,9 @@ const imageItem = {
   }
 };
 
+
 export default function GallerySection() {
+  const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const controls = useAnimation();
   const ref = useRef(null)
@@ -382,7 +385,9 @@ export default function GallerySection() {
             <p className="text-green-100 mb-6 text-lg">
               Agenda una visita y conoce personalmente nuestras instalaciones
             </p>
-            <button className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors duration-300 transform hover:scale-105">
+            <button 
+              onClick={() => router.push('/contacto')}
+              className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors duration-300 transform hover:scale-105">
               Agendar Visita
             </button>
           </div>

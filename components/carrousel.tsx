@@ -4,6 +4,7 @@
 import * as React from "react"
 import { ArrowRight, ChevronLeft, ChevronRight, Phone, MapPin, Clock } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useRouter } from 'next/navigation'
 
 export interface SlideData {
   id: number;
@@ -14,6 +15,8 @@ export interface SlideData {
   description: string;
   primaryCTA: string;
   secondaryCTA: string;
+  primaryUrl: string;
+  secondaryUrl: string;
 }
 
 // 🔧 SLIDES POR DEFECTO - Se usan si no se proporcionan slides personalizados
@@ -25,8 +28,10 @@ const defaultSlides: SlideData[] = [
     businessName: "Guardería Canina DOGS",
     mainHeadline: "El hogar perfecto para tu mejor amigo",
     description: "Cuidado profesional con amor y dedicación para que tu mascota se sienta como en casa.",
-    primaryCTA: "Conocer Más",
+    primaryCTA: "Conocer Más", 
     secondaryCTA: "Contactar",
+    primaryUrl: "/servicios",
+    secondaryUrl: "/contacto",
   },
   {
     id: 2,
@@ -37,6 +42,8 @@ const defaultSlides: SlideData[] = [
     description: "Personal capacitado y instalaciones diseñadas especialmente para el bienestar de tu perro.",
     primaryCTA: "Ver Servicios",
     secondaryCTA: "Contactanos!",
+    primaryUrl: "/servicios",
+    secondaryUrl: "/contacto",
   },
   {
     id: 3,
@@ -47,6 +54,8 @@ const defaultSlides: SlideData[] = [
     description: "Un ambiente seguro y divertido donde tu mascota hará nuevos amigos y vivirá experiencias únicas.",
     primaryCTA: "Agendar Visita",
     secondaryCTA: "Registrate!",
+    primaryUrl: "/registro",
+    secondaryUrl: "/contacto",
   },
 ]
 
@@ -55,8 +64,14 @@ interface SimpleHeroCarouselProps {
 }
 
 export default function SimpleHeroCarousel({ slides }: SimpleHeroCarouselProps) {
+  const router = useRouter();
   const welcomeSlides = slides || defaultSlides;
   const [currentSlide, setCurrentSlide] = React.useState(0)
+  
+  // Función para manejar la navegación
+  const handleNavigation = (url: string) => {
+    router.push(url);
+  };
 
   // Auto-play mejorado con pausa al hacer hover
   React.useEffect(() => {
@@ -222,6 +237,10 @@ export default function SimpleHeroCarousel({ slides }: SimpleHeroCarouselProps) 
                 transition={{ duration: 0.5, delay: 0.7 }}
               >
                 <motion.button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNavigation(currentSlideData.primaryUrl);
+                  }}
                   className="bg-green-800 hover:bg-green-600 text-white font-bold px-5 lg:px-7 py-2.5 lg:py-3.5 text-sm lg:text-base rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center whitespace-nowrap"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
@@ -230,6 +249,10 @@ export default function SimpleHeroCarousel({ slides }: SimpleHeroCarouselProps) 
                   <ArrowRight className="ml-1.5 w-3.5 h-3.5 lg:w-4 lg:h-4" />
                 </motion.button>
                 <motion.button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNavigation(currentSlideData.secondaryUrl);
+                  }}
                   className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold px-5 lg:px-7 py-2.5 lg:py-3.5 text-sm lg:text-base rounded-full transition-all duration-300 backdrop-blur-sm whitespace-nowrap"
                   whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 1)', color: '#111827' }}
                   whileTap={{ scale: 0.98 }}
@@ -313,9 +336,9 @@ export default function SimpleHeroCarousel({ slides }: SimpleHeroCarouselProps) 
       <div className="absolute bottom-16 left-6 right-6 md:hidden">
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-3 text-white border border-white/20">
           <div className="flex justify-between text-xs">
-            <span>📞 (555) 123-4567</span>
-            <span>📍 Av. Principal 123</span>
-            <span>🕐 7AM - 8PM</span>
+            <span>📞 (311) 5632613</span>
+            <span>📍 Calle 11#10b-22</span>
+            <span>🕐 7AM - 6PM</span>
           </div>
         </div>
       </div>

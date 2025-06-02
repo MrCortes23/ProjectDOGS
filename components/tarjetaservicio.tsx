@@ -9,7 +9,7 @@ import Image from "next/image"
 const mainServices = [
   {
     id: 1,
-    title: "Lista de Perros",
+    title: "Galeria",
     subtitle: "Conoce algunos miembros de la guarderia!",
     description:
       "Conoce la lista de caninos que se encuentran registrados en la Guarderia Canina DOGS.",
@@ -18,6 +18,7 @@ const mainServices = [
     features: ["Supervisión 24/7", "Alimentación incluida", "Reportes diarios"],
     price: "Amigos",
     ctaText: "Visualizar Galeria",
+    url: "/galeria", // Ruta para este servicio
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ const mainServices = [
     features: ["Baño", "Peluqueria", "Hospedaje"],
     price: "Comodidad",
     ctaText: "Conoce más",
+    url: "/servicios", // Ruta para este servicio
   },
   {
     id: 3,
@@ -42,11 +44,19 @@ const mainServices = [
     features: ["Dias y horarios disponibles", "Costo por hora", "Metodos de pago"],
     price: "Diversión",
     ctaText: "Agenda tu cita",
+    url: "/citas", // Ruta para este servicio
   },
 ]
 
 export default function MainServices() {
   const [hoveredCard, setHoveredCard] = React.useState<number | null>(null)
+  
+  // Función para manejar la navegación
+  const handleNavigation = (url: string) => {
+    if (url) {
+      window.location.href = url;
+    }
+  };
 
   // Configuración de animación
   const containerVariants = {
@@ -191,7 +201,11 @@ export default function MainServices() {
                   </div>
 
                   {/* CTA Button */}
-                  <button className="w-full bg-gradient-to-r from-green-800 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform group-hover:scale-105 flex items-center justify-center gap-2 shadow-lg">
+                  <button 
+                    type="button"
+                    onClick={() => handleNavigation(service.url)}
+                    className="w-full bg-gradient-to-r from-green-800 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform group-hover:scale-105 flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                  >
                     {service.ctaText}
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>

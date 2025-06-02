@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Shield, Scissors, Gamepad2, Gamepad, Camera, Stethoscope } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface Service {
   id: number;
@@ -13,6 +16,7 @@ interface Service {
   image: string;
   icon: React.ReactNode;
   price: string;
+  slug: string;
 }
 
 const services: Service[] = [
@@ -24,6 +28,7 @@ const services: Service[] = [
     image: '/images/baño.jpg',
     icon: <Scissors className="w-6 h-6" />,
     price: 'Desde $45.000',
+    slug: 'registro',
   },
   {
     id: 2,
@@ -33,6 +38,7 @@ const services: Service[] = [
     image: '/images/veterinaria.jpg',
     icon: <Stethoscope className="w-6 h-6" />,
     price: 'Desde $70.000/sesión',
+    slug: 'consulta-veterinaria',
   },
   {
     id: 3,
@@ -42,6 +48,7 @@ const services: Service[] = [
     image: '/images/entrenamiento.jpg',
     icon: <Shield className="w-6 h-6" />,
     price: 'Desde $60.000/clase',
+    slug: 'entrenamiento-avanzado',
   },
   {
     id: 4,
@@ -51,6 +58,7 @@ const services: Service[] = [
     image: '/images/corriendo.jpg',
     icon: <Gamepad2 className="w-6 h-6" />,
     price: 'Desde $40.000/sesion',
+    slug: 'entrenamiento-basico',
   },
   {
     id: 5,
@@ -60,6 +68,7 @@ const services: Service[] = [
     image: '/images/guarderia.jpg',
     icon: <Gamepad className="w-6 h-6" />,
     price: 'Desde $25.000/dia',
+    slug: 'guarderia-dia',
   },
   {
     id: 6,
@@ -69,6 +78,7 @@ const services: Service[] = [
     image: '/images/guarderia2.jpg',
     icon: <Heart className="w-6 h-6" />,
     price: 'Desde $150.000/semana',
+    slug: 'guarderia-semana',
   },
   {
     id: 7,
@@ -78,6 +88,7 @@ const services: Service[] = [
     image: '/images/paseito.jpeg',
     icon: <Camera className="w-6 h-6" />,
     price: 'Desde $35.000',
+    slug: 'paseo',
   },
 ];
 
@@ -122,8 +133,13 @@ const item = {
 };
 
 const ServicesSection = () => {
+  const router = useRouter();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const handleMoreInfo = () => {
+    router.push('/registro');
+  };
 
   useEffect(() => {
     setIsVisible(true);
@@ -207,7 +223,8 @@ const ServicesSection = () => {
                     </div>
 
                     <button
-                      className="mt-4 px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-medium hover:opacity-90 transition-opacity"
+                      onClick={handleMoreInfo}
+                      className="mt-4 px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-medium hover:opacity-90 transition-all duration-300 transform hover:scale-105"
                       type="button"
                     >
                       Más información
@@ -229,7 +246,10 @@ const ServicesSection = () => {
             <p className="text-blue-100 mb-6 text-lg">
               Contáctanos hoy y descubre por qué somos la guardería canina de confianza
             </p>
-            <button className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors duration-300 transform hover:scale-105">
+            <button 
+              onClick={() => router.push('/contacto')}
+              className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors duration-300 transform hover:scale-105"
+            >
               Contáctanos ahora
             </button>
           </div>
