@@ -120,9 +120,13 @@ export async function DELETE(request: Request) {
         [id]
       );
       // Verificar que los IDs de perros existen y son válidos
+      interface PerroRow {
+        id_perro_pk: number;
+      }
+      
       const idsPerros = perros.rows
-        .filter(p => p && p.id_perro_pk !== undefined && p.id_perro_pk !== null)
-        .map(p => p.id_perro_pk);
+        .filter((p: PerroRow | null) => p !== null && p.id_perro_pk !== undefined && p.id_perro_pk !== null)
+        .map((p: PerroRow) => p.id_perro_pk);
       console.log(`Perros encontrados: ${idsPerros.length}`);
       
       // Si no hay perros, continuar con un array vacío
