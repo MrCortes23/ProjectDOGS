@@ -25,7 +25,7 @@ const services: Service[] = [
     title: 'Baño y Peluquería',
     description: 'Servicio completo de baño y peluquería para tu mascota.',
     features: ['Limpieza de orejas', 'Limpieza de patas', 'Limpieza de boca', 'Antipulgas'],
-    image: '/images/baño.jpg',
+    image: '/images/bano.jpg',
     icon: <Scissors className="w-6 h-6" />,
     price: 'Desde $45.000',
     slug: 'registro',

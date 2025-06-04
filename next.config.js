@@ -29,8 +29,6 @@ const nextConfig = {
       },
     ];
   },
-  // Configuración para exportación estática
-  trailingSlash: true,
   // Configuración de caché para recursos estáticos
   experimental: {
     optimizeCss: true,
