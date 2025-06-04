@@ -3,25 +3,37 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   images: {
-    domains: ['localhost', 'dogsv1-mxpol6cul-corts23s-projects.vercel.app'],
+    domains: ['localhost', 'dogsv1-cqcacbrw5-corts23s-projects.vercel.app'],
     unoptimized: true,
   },
-  // Asegúrate de que las rutas de los assets sean correctas
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://dogsv1-mxpol6cul-corts23s-projects.vercel.app' : '',
-  // Configuración de cabeceras para los assets
+  // Elimina el assetPrefix para usar rutas relativas
+  // Configuración de cabeceras para CORS
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|png|css|js)',
-        locale: false,
+        source: '/:path*',
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
           },
         ],
       },
-    ]
+    ];
+  },
+  // Configuración para exportación estática
+  trailingSlash: true,
+  // Configuración de caché para recursos estáticos
+  experimental: {
+    optimizeCss: true,
   },
 }
 
