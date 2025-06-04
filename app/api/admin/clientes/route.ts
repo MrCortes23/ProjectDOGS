@@ -119,8 +119,16 @@ export async function DELETE(request: Request) {
         'SELECT id_perro_pk FROM perro WHERE id_cliente_fk = $1',
         [id]
       );
-      const idsPerros = perros.rows.map(p => p.id_perro_pk);
+      // Verificar que los IDs de perros existen y son válidos
+      const idsPerros = perros.rows
+        .filter(p => p && p.id_perro_pk !== undefined && p.id_perro_pk !== null)
+        .map(p => p.id_perro_pk);
       console.log(`Perros encontrados: ${idsPerros.length}`);
+      
+      // Si no hay perros, continuar con un array vacío
+      if (!idsPerros.length) {
+        console.log('No se encontraron perros asociados al cliente');
+      }
       
       if (idsPerros.length > 0) {
         // 3. Eliminar servicios de citas (cita_servicio) para los perros del cliente

@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import {formatISO}  from 'date-fns';
-import { es } from 'date-fns/locale';
+// Importar estilos del calendario
+import 'react-calendar/dist/Calendar.css';
 
 interface AgendarCitaProps {
   onSchedule: (fecha: string, horario: string, costo: number, observaciones: string, id_perro: number, id_empleado: number) => void;
@@ -124,7 +125,7 @@ export default function AgendarCita({ onSchedule, servicios, perros }: AgendarCi
           <Calendar
             onChange={(value) => handleDateSelect(value instanceof Date ? value : null)}
             value={selectedDate}
-            locale={es}
+            // El locale se maneja automáticamente según el navegador
             className="react-calendar"
             tileClassName={(args: { date: Date }) => {
               const { date } = args;
