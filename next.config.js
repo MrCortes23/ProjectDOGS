@@ -3,46 +3,21 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   images: {
-    domains: ['localhost'],
-    unoptimized: true, // Desactiva la optimización de imágenes para simplificar el despliegue
+    domains: ['localhost', 'dogsv1-mxpol6cul-corts23s-projects.vercel.app'],
+    unoptimized: true,
   },
-  // Configuración para exportación estática si es necesario
-  // output: 'export',
-  // distDir: 'build',
-  // trailingSlash: true,
-  // Configuración para rutas de API
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/api/:path*',
-      },
-    ]
-  },
-  // Manejo de errores mejorado
-  onDemandEntries: {
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 2,
-  },
-  // Configuración de compresión
-  compress: true,
-  // Configuración de encabezados de seguridad
+  // Asegúrate de que las rutas de los assets sean correctas
+  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://dogsv1-mxpol6cul-corts23s-projects.vercel.app' : '',
+  // Configuración de cabeceras para los assets
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: '/:all*(svg|jpg|png|css|js)',
+        locale: false,
         headers: [
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
