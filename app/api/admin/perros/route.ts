@@ -50,11 +50,15 @@ export async function DELETE(request: Request) {
     
     try {
       // 1. Obtener los IDs de las citas del perro para eliminaciones posteriores
-      const citasResult = await client.query(
+      interface CitaRow {
+        id_cita_pk: number;
+      }
+
+      const citasResult = await client.query<CitaRow>(
         'SELECT id_cita_pk FROM cita WHERE id_perro_fk = $1',
         [id]
       );
-      const citasIds = citasResult.rows.map(row => row.id_cita_pk);
+      const citasIds = citasResult.rows.map((row: CitaRow) => row.id_cita_pk);
 
       // 2. Si hay citas, eliminar primero las facturas relacionadas
       if (citasIds.length > 0) {
